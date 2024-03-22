@@ -1,0 +1,20 @@
+# dependencies
+/server/.vscode
+/server/node_modules
+/server/img
+/server/export
+/server/upload
+
+/site/build
+/site/node_modules
+/site/*.lock
+/site/package-lock.json
+
+
+
+# misc
+.DS_Store
+*.zip
+
+
+secret.md
