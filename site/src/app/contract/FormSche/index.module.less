@@ -80,8 +80,53 @@
       position: relative;
       display: flex;
 
+      &:hover {
+
+
+        code {
+          display: flex;
+          opacity: 1;
+        }
+      }
+
       a {
         height: ;
+      }
+
+      code {
+        position: absolute;
+        top: -50px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transform: translate(calc(-50% + 38px), 0%);
+        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+        height: 40px;
+        // display: flex;
+        width: 200px;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        display: none;
+        transition: .3s;
+
+
+
+        &:before {
+          width: 0;
+          height: 0;
+          border: 5px solid transparent;
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          clip-path: var(--ant-popover-arrow-path);
+          width: var(--ant-size-popup-arrow);
+          height: calc(var(--ant-size-popup-arrow) / 2);
+          background: var(--antd-arrow-background-color);
+          left: calc(50% - 13px);
+          border-top: 5px solid #fff;
+        }
       }
     }
 

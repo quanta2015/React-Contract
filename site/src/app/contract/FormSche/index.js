@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useEffect,useState,useRef} from 'react';
-import {Input,  Space,  Form, Button, Row, Col, Select, Tag, Upload, DatePicker, InputNumber, Modal, message} from 'antd'
+import {Input,  Space,  Form, Button, Row, Col, Select, Tag, Upload, Popover, DatePicker, InputNumber, Modal, message} from 'antd'
 import { MinusCircleOutlined, PlusOutlined ,CloudUploadOutlined, ExclamationCircleFilled, CloseOutlined, FileMarkdownOutlined } from '@ant-design/icons';
 import {API_SERVER} from '@/constant/apis'
 import { TYPE_LIST } from '@/constant/data'
@@ -44,6 +44,15 @@ const FormSche = ({col, item, method,setRefresh, setShowSche,setLoading}) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
+
+
+  const [visible, setVisible] = useState(false);
+
+  const handleVisibleChange = (visible) => {
+    setVisible(visible);
+  };
+
+
 
   useEffect(() => {
 
@@ -246,10 +255,12 @@ const FormSche = ({col, item, method,setRefresh, setShowSche,setLoading}) => {
                 </Upload>}
 
                 {file[i].map((f,j)=> 
-                  <div className={s.fileitem} key={j}>
-                    <i className={s.del} onClick={()=>doDelFile(i,j,o,'file')}></i>
-                    <a href={`${API_SERVER}/${f}`} alt=""  key={j}><img src={icon_file} alt="" /></a> 
-                  </div>
+                  
+                    <div className={s.fileitem} key={j}>
+                      <code>{f.split('-')[1]}</code>
+                      <i className={s.del} onClick={()=>doDelFile(i,j,o,'file')}></i>
+                      <a href={`${API_SERVER}/${f}`} alt=""  key={j}><img src={icon_file} alt="" /></a> 
+                    </div>
                 )}
               </div>
               <div className={s.proc}>

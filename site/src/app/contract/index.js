@@ -78,10 +78,12 @@ const Contract = () => {
     render: o => (
       <Space className={s.cell_fun}>
         {pid===0 && <Button type="primary" size='small' onClick={()=>doNav(o)} ><BlockOutlined />子项</Button>}
-        <Button type="primary" size='small' onClick={()=>doSche(o)} ><ScheduleOutlined />计划</Button>
+        <Button type="primary" size='small' onClick={()=>doSche(o)} ><ScheduleOutlined />进度</Button>
         <Button type="primary" size='small' onClick={()=>doEdit(o)} ><EditOutlined />编辑</Button>
         <Button type="primary" size='small' danger onClick={()=>showDelConfirm(o)}><DeleteOutlined />删除</Button>
-        <Button type="primary" size='small' style={{background: '#0f843e'}}  onClick={()=>showFinishConfirm(o)}><CheckOutlined />完成合同</Button>
+
+        {o.status ===0 && 
+        <Button type="primary" size='small' style={{background: '#0f843e'}}  onClick={()=>showFinishConfirm(o)}><CheckOutlined />完成合同</Button>}
       </Space>
     ),
   })

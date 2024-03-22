@@ -55,16 +55,25 @@ router.post('/login',async (req, res, next) =>{
   }
 })
 
+
+
 // 上傳文件
 router.post('/upload', function(req, res,next) {
   const form = formidable({ uploadDir: `${__dirname}/../upload` });
 
   form.on('fileBegin', function(name, file) {
     const filename = file.originalFilename;
-    const filepath =  file.filepath;
-    const fileext = filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
+    // const filehead = filename.split('.')[0]
+    // const fileext = filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
 
-    file.filepath = `upload/${dayjs().format('YYYYMMDDhhmmss')}.${fileext}`
+    const timestamp = dayjs().format('YYYYMMDDHHmmss');
+    // const newFileName = `${timestamp}-${filehead}`;
+
+
+    file.filepath = `upload/${timestamp}-${filename}`
+
+
+    console.log(file.filepath)
   })
 
   form.parse(req, (err, fields, files) => {
@@ -102,7 +111,7 @@ router.post('/queryContact', async (req, res, next) => {
 // 查詢合同
 router.post('/saveContact', async (req, res, next) => {
   let params = req.body
-  console.log(params)
+  // console.log(params)
   let sql = `CALL PROC_SAVE_CONTACT(?)`
   let r = await callP(sql, params, res)
   res.status(200).json({ code: 0, data: r })
@@ -111,7 +120,7 @@ router.post('/saveContact', async (req, res, next) => {
 // 删除合同
 router.post('/delContact', async (req, res, next) => {
   let params = req.body
-  console.log(params)
+  // console.log(params)
   let sql = `CALL PROC_DEL_CONTACT(?)`
   let r = await callP(sql, params, res)
   res.status(200).json({ code: 0, data: r })
@@ -121,7 +130,7 @@ router.post('/delContact', async (req, res, next) => {
 // 删除合同
 router.post('/querySche', async (req, res, next) => {
   let params = req.body
-  console.log(params)
+  // console.log(params)
   let sql = `CALL PROC_QUERY_SCHE(?)`
   let r = await callP(sql, params, res)
   res.status(200).json({ code: 0, data: r })
@@ -131,7 +140,7 @@ router.post('/querySche', async (req, res, next) => {
 // 删除合同
 router.post('/saveScheItem', async (req, res, next) => {
   let params = req.body
-  console.log(params)
+  // console.log(params)
   let sql = `CALL PROC_SAVE_SCHE_ITEM(?)`
   let r = await callP(sql, params, res)
   res.status(200).json({ code: 0, data: r })
@@ -140,7 +149,7 @@ router.post('/saveScheItem', async (req, res, next) => {
 
 router.post('/finishScheItem', async (req, res, next) => {
   let params = req.body
-  console.log(params)
+  // console.log(params)
   let sql = `CALL PROC_FINISH_SCHE_ITEM(?)`
   let r = await callP(sql, params, res)
   res.status(200).json({ code: 0, data: r })
@@ -148,7 +157,7 @@ router.post('/finishScheItem', async (req, res, next) => {
 
 router.post('/finishContact', async (req, res, next) => {
   let params = req.body
-  console.log(params)
+  // console.log(params)
   let sql = `CALL PROC_FINISH_CONTACT(?)`
   let r = await callP(sql, params, res)
   res.status(200).json({ code: 0, data: r })
