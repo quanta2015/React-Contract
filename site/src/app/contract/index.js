@@ -83,7 +83,10 @@ const Contract = () => {
         <Button type="primary" size='small' danger onClick={()=>showDelConfirm(o)}><DeleteOutlined />删除</Button>
 
         {o.status ===0 && 
-        <Button type="primary" size='small' style={{background: '#0f843e'}}  onClick={()=>showFinishConfirm(o)}><CheckOutlined />完成合同</Button>}
+        <Button type="primary" size='small' style={{background: '#11a052'}}  onClick={()=>showFinishConfirm(o,1)}><CheckOutlined />完成</Button>}
+
+        {o.status ===1 && 
+        <Button type="primary" size='small' style={{background: '#666'}}  onClick={()=>showFinishConfirm(o,0)}><RollbackOutlined />撤回</Button>}
       </Space>
     ),
   })
@@ -109,7 +112,7 @@ const Contract = () => {
     });
   };
 
-  const showFinishConfirm = (e) => {
+  const showFinishConfirm = (e,status) => {
     confirm({
       title: '确认要完成记录?',
       icon: <ExclamationCircleFilled />,
@@ -117,7 +120,7 @@ const Contract = () => {
       okText: '确 定',
       cancelText: '取 消',
       onOk() {
-        doFinish(e)
+        doFinish(e,status)
       },
     });
   };
@@ -125,11 +128,12 @@ const Contract = () => {
 
   
   // 完成合同
-  const doFinish = (e)=>{
+  const doFinish = (e,status)=>{
     // console.log(e)
     let params = { 
       id: e.id,
       pid,
+      status,
     }
     setLoading(true)
     store.finishContact(params).then(r=>{

@@ -101,11 +101,22 @@ router.post('/upload', function(req, res,next) {
 
 // 查詢合同
 router.post('/queryContact', async (req, res, next) => {
-  let params = req.body
+  let params1 = req.body
   // console.log(params)
-  let sql = `CALL PROC_QUERY_CONTACT(?)`
-  let r = await callP(sql, params, res)
-  res.status(200).json({ code: 0, data: r })
+  let sql1 = `CALL PROC_QUERY_CONTACT(?)`
+  let sql2 = `CALL PROC_QUERY_CONTACT_SCHE(?)`
+  let r = await callP(sql1, params1, res)
+
+  Promise.all(r.map(async o => {
+    let params2 = {
+      cid: o.id
+    };
+    let q = await callP(sql2, params2, res);
+    o.progress = q[0].name;
+  })).then(() => {
+    // console.log(r); // 在此处访问更新后的数组 r
+    res.status(200).json({ code: 0, data: r })
+  });
 })
 
 // 查詢合同

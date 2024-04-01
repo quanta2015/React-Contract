@@ -48,9 +48,6 @@ const FormSche = ({col, item, method,setRefresh, setShowSche,setLoading}) => {
 
   const [visible, setVisible] = useState(false);
 
-  const handleVisibleChange = (visible) => {
-    setVisible(visible);
-  };
 
 
 
@@ -158,8 +155,8 @@ const FormSche = ({col, item, method,setRefresh, setShowSche,setLoading}) => {
       id: o.id,
       file: file[i],
       imgs: imgs[i],
-      proc: proc[i],
-      info: info[i],
+      proc: proc[i]??'',
+      info: info[i]??'',
       // file,
       // type,
     }
@@ -171,7 +168,7 @@ const FormSche = ({col, item, method,setRefresh, setShowSche,setLoading}) => {
   }
 
 
-  const doFinishConfirm = (o,i) => {
+  const doFinishConfirm = (o,i,status) => {
     confirm({
       title: '确认完成计划?',
       icon: <ExclamationCircleFilled />,
@@ -179,15 +176,16 @@ const FormSche = ({col, item, method,setRefresh, setShowSche,setLoading}) => {
       okText: '确 定',
       cancelText: '取 消',
       onOk() {
-        doFinishScheItem(o,i)
+        doFinishScheItem(o,i,status)
       },
     });
   };
 
-  const doFinishScheItem=(o,i)=>{
+  const doFinishScheItem=(o,i,status)=>{
     const params  = {
       id: o.id,
       cid: item.id,
+      status,
     }
     setLoading(true)
     store.finishScheItem(params).then(r=>{
@@ -271,7 +269,14 @@ const FormSche = ({col, item, method,setRefresh, setShowSche,setLoading}) => {
               </div>
               
               <div className={s.fun}>
-                <Button type="primary" size="small" onClick={()=>doFinishConfirm(o,i)} danger>完成</Button>
+                {o.status ===0 && 
+                  <Button type="primary" size="small" style={{background: '#11a052'}} onClick={()=>doFinishConfirm(o,i,1)} >完成</Button>}
+
+                {o.status ===1 && 
+                  <Button type="primary" size="small" style={{background: '#666'}}  onClick={()=>doFinishConfirm(o,i,0)} >撤回</Button>}
+
+                
+                
                 <Button type="primary" size="small" onClick={()=>doSaveScheItem(o,i)}>保存</Button>
               </div>
               

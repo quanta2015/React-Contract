@@ -94,7 +94,7 @@ export const json_contact = [
   },{
     dataIndex: 'money',
     type: 'string',
-    title: '金額(万)',
+    title: '金額',
     width: 120,
     align: 'center',
     req: true,
